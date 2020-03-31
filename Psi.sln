@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runtime", "Runtime", "{3F77
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71B06E9A-6B24-443B-A1E4-1524878BD995}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		build.sh = build.sh
 		CONTRIBUTING.md = CONTRIBUTING.md
@@ -191,7 +192,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PsiStoreTool", "Sources\Too
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Language.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language.Windows\Microsoft.Psi.CognitiveServices.Language.Windows.csproj", "{FE571017-BC81-4B70-A876-58A52CAB40B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Msagl.WpfGraphControl", "Sources\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj", "{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Msagl.WpfGraphControl", "Sources\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj", "{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{982549B3-5786-4F3B-A92A-2400E056BC39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerVision", "ComputerVision\ComputerVision.csproj", "{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawObjects", "DrawObjects\DrawObjects.csproj", "{31E7DC70-360F-44DA-BA21-1113779DCE2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -427,6 +434,14 @@ Global
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -510,6 +525,8 @@ Global
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E} = {8FEFAB80-0A89-4109-9104-5E937315C913}
 		{FE571017-BC81-4B70-A876-58A52CAB40B4} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
+		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C} = {982549B3-5786-4F3B-A92A-2400E056BC39}
+		{31E7DC70-360F-44DA-BA21-1113779DCE2B} = {982549B3-5786-4F3B-A92A-2400E056BC39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

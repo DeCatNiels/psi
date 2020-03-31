@@ -843,6 +843,11 @@
   <ItemGroup>
     <Resource Include="Icons\group-live.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

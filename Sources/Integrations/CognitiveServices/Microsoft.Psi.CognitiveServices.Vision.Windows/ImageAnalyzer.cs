@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.CognitiveServices.Vision
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
@@ -235,6 +236,8 @@ namespace Microsoft.Psi.CognitiveServices.Vision
 
         private async Task ReceiveAsync(Shared<Image> data, Envelope e)
         {
+            // Console.WriteLine("objectdetection received sequence id: " + e.SequenceId);
+            // Console.WriteLine("objectdetection receive image: " + e.OriginatingTime);
             var analysisResult = default(ImageAnalysis);
 
             if (data != null)
@@ -251,6 +254,9 @@ namespace Microsoft.Psi.CognitiveServices.Vision
                     catch
                     {
                         // automatically swallow exceptions
+
+                        // Console.WriteLine("analysing failed with exception: " + ex.Message + "\n" + ex.ToString());
+                        Console.WriteLine("new error");
                     }
                 }
             }
@@ -264,7 +270,8 @@ namespace Microsoft.Psi.CognitiveServices.Vision
                 new ApiKeyServiceClientCredentials(this.configuration.SubscriptionKey),
                 new System.Net.Http.DelegatingHandler[] { })
             {
-                Endpoint = "https://westus.api.cognitive.microsoft.com/",
+                // Endpoint = "https://westus.api.cognitive.microsoft.com/",
+                Endpoint = "https://roomextractioncv.cognitiveservices.azure.com/",
             };
         }
     }

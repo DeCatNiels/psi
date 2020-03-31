@@ -283,7 +283,7 @@ namespace Microsoft.Psi.Imaging
         /// </remarks>
         public void Dispose()
         {
-            this.image.Dispose();
+            this.image?.Dispose();
             this.image = null;
         }
 

@@ -453,15 +453,27 @@ namespace Microsoft.Psi.Imaging
         /// <param name="image">Image to draw on.</param>
         /// <param name="str">Text to render.</param>
         /// <param name="p0">Pixel coordinates for center of circle.</param>
-        public static void DrawText(this Image image, string str, Point p0)
+        /// <param name="color">SolidBrush color of the text.</param>
+        /// <param name="font">Font of the text.</param>
+        public static void DrawText(this Image image, string str, Point p0, SolidBrush color = null, Font font = null)
         {
             using (Bitmap bm = image.ToManagedImage(false))
             {
                 using (var graphics = Graphics.FromImage(bm))
                 {
-                    using (Font drawFont = new Font("Arial", 24))
+                    if (font == null)
                     {
-                        using (SolidBrush drawBrush = new SolidBrush(Color.Black))
+                        font = new Font("Arial", 24);
+                    }
+
+                    using (Font drawFont = font)
+                    {
+                        if (color == null)
+                        {
+                            color = new SolidBrush(Color.Black);
+                        }
+
+                        using (SolidBrush drawBrush = color)
                         {
                             using (StringFormat drawFormat = new StringFormat())
                             {
