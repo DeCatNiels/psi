@@ -81,7 +81,7 @@ namespace ComputerVision
          */
         private void ReceivedImage(Shared<Microsoft.Psi.Imaging.Image> input, Envelope envelope)
         {
-            this.lastReceivedImageInput = input.AddRef();
+            this.lastReceivedImageInput = Shared.Create(input.Resource.DeepClone());
             //this.originatingTime = envelope.OriginatingTime;
         }
         /*

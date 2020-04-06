@@ -52,6 +52,8 @@ namespace ComputerVision
             //Console.WriteLine("originating time image: " + this.originatingTime);
             //Console.WriteLine("originating time imageAnalysis: " + envelope.OriginatingTime);
 
+            
+
             foreach (FaceDescription detectedFace in input.Faces)
             {
                 try
@@ -81,7 +83,7 @@ namespace ComputerVision
          */
         private void ReceivedImage(Shared<Microsoft.Psi.Imaging.Image> input, Envelope envelope)
         {
-            this.lastReceivedImageInput = input.AddRef();
+            this.lastReceivedImageInput = Shared.Create(input.Resource.DeepClone());
             //this.originatingTime = envelope.OriginatingTime;
         }
         /*

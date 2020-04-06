@@ -1,0 +1,2294 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SixLabors.ImageSharp.Drawing</name>
+    </assembly>
+    <members>
+        <member name="T:SixLabors.ImageSharp.Primitives.Region">
+            <summary>
+            Represents a region of an image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Primitives.Region.MaxIntersections">
+            <summary>
+            Gets the maximum number of intersections to could be returned.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Primitives.Region.Bounds">
+            <summary>
+            Gets the bounding box that entirely surrounds this region.
+            </summary>
+            <remarks>
+            This should always contains all possible points returned from <see cref="M:SixLabors.ImageSharp.Primitives.Region.Scan(System.Single,System.Span{System.Single},SixLabors.ImageSharp.Configuration)"/>.
+            </remarks>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Primitives.Region.Scan(System.Single,System.Span{System.Single},SixLabors.ImageSharp.Configuration)">
+            <summary>
+            Scans the X axis for intersections at the Y axis position.
+            </summary>
+            <param name="y">The position along the y axis to find intersections.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="configuration">A <see cref="T:SixLabors.ImageSharp.Configuration"/> instance in the context of the caller.</param>
+            <returns>The number of intersections found.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Primitives.ShapePath">
+            <summary>
+            A mapping between a <see cref="T:SixLabors.Shapes.IPath"/> and a region.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Primitives.ShapePath.#ctor(SixLabors.Shapes.IPath,SixLabors.ImageSharp.Processing.IPen)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Primitives.ShapePath"/> class.
+            </summary>
+            <param name="shape">The shape.</param>
+            <param name="pen">The pen to apply to the shape.</param>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Primitives.ShapeRegion">
+            <summary>
+            A mapping between a <see cref="T:SixLabors.Shapes.IPath"/> and a region.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Primitives.ShapeRegion.#ctor(SixLabors.Shapes.IPath)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Primitives.ShapeRegion"/> class.
+            </summary>
+            <param name="shape">The shape.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Primitives.ShapeRegion.Shape">
+            <summary>
+            Gets the fillable shape
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Primitives.ShapeRegion.MaxIntersections">
+            <inheritdoc/>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Primitives.ShapeRegion.Bounds">
+            <inheritdoc/>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Primitives.ShapeRegion.Scan(System.Single,System.Span{System.Single},SixLabors.ImageSharp.Configuration)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.BrushApplicator`1">
+            <summary>
+            primitive that converts a point in to a color for discovering the fill color based on an implementation
+            </summary>
+            <typeparam name="TPixel">The pixel format.</typeparam>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.BrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.BrushApplicator`1"/> class.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="options">The options.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.BrushApplicator`1.Blender">
+            <summary>
+            Gets the blender
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.BrushApplicator`1.Target">
+            <summary>
+            Gets the destination
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.BrushApplicator`1.Options">
+            <summary>
+            Gets the blend percentage
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.BrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the color for a single pixel.
+            </summary>
+            <param name="x">The x coordinate.</param>
+            <param name="y">The y coordinate.</param>
+            <returns>The a <typeparamref name="TPixel"/> that should be applied to the pixel.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.BrushApplicator`1.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.BrushApplicator`1.Apply(System.Span{System.Single},System.Int32,System.Int32)">
+            <summary>
+            Applies the opacity weighting for each pixel in a scanline to the target based on the pattern contained in the brush.
+            </summary>
+            <param name="scanline">The a collection of opacity values between 0 and 1 to be merged with the brushed color value before being applied to the target.</param>
+            <param name="x">The x position in the target pixel space that the start of the scanline data corresponds to.</param>
+            <param name="y">The y position in  the target pixel space that whole scanline corresponds to.</param>
+            <remarks>scanlineBuffer will be > scanlineWidth but provide and offset in case we want to share a larger buffer across runs.</remarks>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Brushes">
+            <summary>
+            A collection of methods for creating generic brushes.
+            </summary>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.Percent10Pattern">
+            <summary>
+            Percent10 Hatch Pattern
+            </summary>
+            ---> x axis
+            ^
+            | y - axis
+            |
+            see PatternBrush for details about how to make new patterns work
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.Percent20Pattern">
+            <summary>
+            Percent20 pattern.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.HorizontalPattern">
+            <summary>
+            Horizontal Hatch Pattern
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.MinPattern">
+            <summary>
+            Min Pattern
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.VerticalPattern">
+            <summary>
+            Vertical Pattern
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.ForwardDiagonalPattern">
+            <summary>
+            Forward Diagonal Pattern
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.Brushes.BackwardDiagonalPattern">
+            <summary>
+            Backward Diagonal Pattern
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Solid(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a solid color
+            </summary>
+            <param name="color">The color.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Percent10(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Percent10 Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Percent10(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Percent10 Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Percent20(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Percent20 Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Percent20(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Percent20 Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Horizontal(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Horizontal Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Horizontal(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Horizontal Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Min(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Min Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Min(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Min Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Vertical(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Vertical Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.Vertical(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Vertical Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.ForwardDiagonal(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Forward Diagonal Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.ForwardDiagonal(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Forward Diagonal Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.BackwardDiagonal(SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Backward Diagonal Hatch Pattern with the specified foreground color and a
+            transparent background.
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Brushes.BackwardDiagonal(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color)">
+            <summary>
+            Create as brush that will paint a Backward Diagonal Hatch Pattern with the specified colors
+            </summary>
+            <param name="foreColor">Color of the foreground.</param>
+            <param name="backColor">Color of the background.</param>
+            <returns>A New <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/></returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.ColorStop">
+            <summary>
+            A struct that defines a single color stop.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ColorStop.#ctor(System.Single,SixLabors.ImageSharp.Color@)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.ColorStop" /> struct.
+            </summary>
+            <param name="ratio">Where should it be? 0 is at the start, 1 at the end of the Gradient.</param>
+            <param name="color">What color should be used at that point?</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.ColorStop.Ratio">
+            <summary>
+            Gets the point along the defined gradient axis.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.ColorStop.Color">
+            <summary>
+            Gets the color to be used.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawingHelpers.ToPixelMatrix``1(SixLabors.ImageSharp.Primitives.DenseMatrix{SixLabors.ImageSharp.Color},SixLabors.ImageSharp.Configuration)">
+            <summary>
+            Convert a <see cref="T:SixLabors.ImageSharp.Primitives.DenseMatrix`1"/> to a <see cref="T:SixLabors.ImageSharp.Primitives.DenseMatrix`1"/> of the given pixel type.
+            </summary>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.EllipticGradientBrush">
+            <summary>
+            Gradient Brush with elliptic shape.
+            The ellipse is defined by a center point,
+            a point on the longest extension of the ellipse and
+            the ratio between longest and shortest extension.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.EllipticGradientBrush.#ctor(SixLabors.Primitives.PointF,SixLabors.Primitives.PointF,System.Single,SixLabors.ImageSharp.Processing.GradientRepetitionMode,SixLabors.ImageSharp.Processing.ColorStop[])">
+            <inheritdoc cref="T:SixLabors.ImageSharp.Processing.GradientBrush" />
+            <param name="center">The center of the elliptical gradient and 0 for the color stops.</param>
+            <param name="referenceAxisEnd">The end point of the reference axis of the ellipse.</param>
+            <param name="axisRatio">
+              The ratio of the axis widths.
+              The second axis' is perpendicular to the reference axis and
+              it's length is the reference axis' length multiplied by this factor.
+            </param>
+            <param name="repetitionMode">Defines how the colors of the gradients are repeated.</param>
+            <param name="colorStops">the color stops as defined in base class.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.EllipticGradientBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.GraphicsOptions,SixLabors.Primitives.PointF,SixLabors.Primitives.PointF,System.Single,SixLabors.ImageSharp.Processing.ColorStop[],SixLabors.ImageSharp.Processing.GradientRepetitionMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1" /> class.
+            </summary>
+            <param name="target">The target image</param>
+            <param name="options">The options</param>
+            <param name="center">Center of the ellipse</param>
+            <param name="referenceAxisEnd">Point on one angular points of the ellipse.</param>
+            <param name="axisRatio">
+            Ratio of the axis length's. Used to determine the length of the second axis,
+            the first is defined by <see cref="F:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1.center"/> and <see cref="F:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1.referenceAxisEnd"/>.</param>
+            <param name="colorStops">Definition of colors</param>
+            <param name="repetitionMode">Defines how the gradient colors are repeated.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.EllipticGradientBrush.RadialGradientBrushApplicator`1.PositionOnGradient(System.Single,System.Single)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawBezierExtensions">
+            <summary>
+            Adds extensions that allow the drawing of Bezier paths to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path with the supplied pen
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawBezierExtensions.DrawBeziers(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided points as an open Bezier path with the supplied pen
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawImageExtensions">
+            <summary>
+            Adds extensions that allow the drawing of images to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="colorBlending">The blending mode.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,SixLabors.ImageSharp.PixelFormats.PixelAlphaCompositionMode,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="colorBlending">The color blending mode.</param>
+            <param name="alphaComposition">The alpha composition mode.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="options">The options, including the blending type and blending amount.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.Primitives.Point,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.Primitives.Point,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="colorBlending">The color blending to apply.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.Primitives.Point,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,SixLabors.ImageSharp.PixelFormats.PixelAlphaCompositionMode,System.Single)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="colorBlending">The color blending to apply.</param>
+            <param name="alphaComposition">The alpha composition mode.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawImageExtensions.DrawImage(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Image,SixLabors.Primitives.Point,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Draws the given image together with the current one by blending their pixels.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="image">The image to blend with the currently processing image.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="options">The options containing the blend mode and opacity.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawLineExtensions">
+            <summary>
+            Adds extensions that allow the drawing of lines to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path at the provided thickness with the supplied brush
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path with the supplied pen
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawLineExtensions.DrawLines(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as an open Linear path with the supplied pen
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions">
+            <summary>
+            Adds extensions that allow the drawing of collections of polygon outlines to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="paths">The shapes.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathCollectionExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawPathExtensions">
+            <summary>
+            Adds extensions that allow the drawing of polygon outlines to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="path">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPathExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Shapes.IPath)">
+            <summary>
+            Draws the outline of the polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawPolygonExtensions">
+            <summary>
+            Adds extensions that allow the drawing of closed linear polygons to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided Pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawPolygonExtensions.DrawPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF[])">
+            <summary>
+            Draws the provided Points as a closed Linear Polygon with the provided Pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawRectangleExtensions">
+            <summary>
+            Adds extensions that allow the drawing of rectangles to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="pen">The pen.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="pen">The pen.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Single,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawRectangleExtensions.Draw(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Single,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Draws the outline of the rectangle with the provided brush at the provided thickness.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="thickness">The thickness.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.DrawTextExtensions">
+            <summary>
+            Adds extensions that allow the drawing of text to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Color,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image filled via the brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="color">The color.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.TextGraphicsOptions,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Color,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image filled via the brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="color">The color.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image filled via the brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.TextGraphicsOptions,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image filled via the brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image outlined via the pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="pen">The pen.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.TextGraphicsOptions,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image outlined via the pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="pen">The pen.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text onto the the image filled via the brush then outlined via the pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="pen">The pen.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.DrawTextExtensions.DrawText(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.TextGraphicsOptions,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF)">
+            <summary>
+            Draws the text using the default resolution of <value>72dpi</value> onto the the image filled via the brush then outlined via the pen.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="text">The text.</param>
+            <param name="font">The font.</param>
+            <param name="brush">The brush.</param>
+            <param name="pen">The pen.</param>
+            <param name="location">The location.</param>
+            <returns>
+            The <see cref="T:SixLabors.ImageSharp.Image`1" />.
+            </returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillPathBuilderExtensions">
+            <summary>
+            Adds extensions that allow the filling of polygons with various brushes to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathBuilderExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,System.Action{SixLabors.Shapes.PathBuilder})">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The graphics options.</param>
+            <param name="brush">The brush.</param>
+            <param name="path">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathBuilderExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,System.Action{SixLabors.Shapes.PathBuilder})">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathBuilderExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,System.Action{SixLabors.Shapes.PathBuilder})">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathBuilderExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,System.Action{SixLabors.Shapes.PathBuilder})">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillPathCollectionExtensions">
+            <summary>
+            Adds extensions that allow the filling of collections of polygon outlines to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathCollectionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The graphics options.</param>
+            <param name="brush">The brush.</param>
+            <param name="paths">The shapes.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathCollectionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathCollectionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathCollectionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,SixLabors.Shapes.IPathCollection)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="paths">The paths.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillPathExtensions">
+            <summary>
+            Adds extensions that allow the filling of polygon outlines to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Shapes.IPath)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The graphics options.</param>
+            <param name="brush">The brush.</param>
+            <param name="path">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Shapes.IPath)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,SixLabors.Shapes.IPath)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush..
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPathExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,SixLabors.Shapes.IPath)">
+            <summary>
+            Flood fills the image in the shape of the provided polygon with the specified brush..
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillPolygonExtensions">
+            <summary>
+            Adds extensions that allow the filling of closed linear polygons to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPolygonExtensions.FillPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.PointF[])">
+            <summary>
+            Flood fills the image in the shape of a Linear polygon described by the points
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPolygonExtensions.FillPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.PointF[])">
+            <summary>
+            Flood fills the image in the shape of a Linear polygon described by the points
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPolygonExtensions.FillPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,SixLabors.Primitives.PointF[])">
+            <summary>
+            Flood fills the image in the shape of a Linear polygon described by the points
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillPolygonExtensions.FillPolygon(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,SixLabors.Primitives.PointF[])">
+            <summary>
+            Flood fills the image in the shape of a Linear polygon described by the points
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="points">The points.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillRectangleExtensions">
+            <summary>
+            Adds extensions that allow the filling of rectangles to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRectangleExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Flood fills the image in the shape of the provided rectangle with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="brush">The brush.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRectangleExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Flood fills the image in the shape of the provided rectangle with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRectangleExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Flood fills the image in the shape of the provided rectangle with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRectangleExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,SixLabors.Primitives.RectangleF)">
+            <summary>
+            Flood fills the image in the shape of the provided rectangle with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="shape">The shape.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.FillRegionExtensions">
+            <summary>
+            Adds extensions that allow the filling of regions with various brushes to the <see cref="T:SixLabors.ImageSharp.Image`1"/> type.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush)">
+            <summary>
+            Flood fills the image with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The details how to fill the region of interest.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color)">
+            <summary>
+            Flood fills the image with the specified color.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Primitives.Region)">
+            <summary>
+            Flood fills the image with in the region with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="brush">The brush.</param>
+            <param name="region">The region.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Primitives.Region)">
+            <summary>
+            Flood fills the image with in the region with the specified color.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The options.</param>
+            <param name="color">The color.</param>
+            <param name="region">The region.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Primitives.Region)">
+            <summary>
+            Flood fills the image with in the region with the specified color.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="color">The color.</param>
+            <param name="region">The region.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Primitives.Region)">
+            <summary>
+            Flood fills the image with in the region with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The graphics options.</param>
+            <param name="brush">The brush.</param>
+            <param name="region">The region.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.FillRegionExtensions.Fill(SixLabors.ImageSharp.Processing.IImageProcessingContext,SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.IBrush)">
+            <summary>
+            Flood fills the image with the specified brush.
+            </summary>
+            <param name="source">The image this method extends.</param>
+            <param name="options">The graphics options.</param>
+            <param name="brush">The details how to fill the region of interest.</param>
+            <returns>The <see cref="T:SixLabors.ImageSharp.Image`1"/>.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.GradientBrush">
+            <summary>
+            Base class for Gradient brushes
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.GradientBrush.#ctor(SixLabors.ImageSharp.Processing.GradientRepetitionMode,SixLabors.ImageSharp.Processing.ColorStop[])">
+            <inheritdoc cref="T:SixLabors.ImageSharp.Processing.IBrush"/>
+            <param name="repetitionMode">Defines how the colors are repeated beyond the interval [0..1]</param>
+            <param name="colorStops">The gradient colors.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.GradientBrush.RepetitionMode">
+            <summary>
+            Gets how the colors are repeated beyond the interval [0..1].
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.GradientBrush.ColorStops">
+            <summary>
+            Gets the list of color stops for this gradient.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.GradientBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.GradientBrush.GradientBrushApplicator`1">
+            <summary>
+            Base class for gradient brush applicators
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.GradientBrush.GradientBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.GraphicsOptions,SixLabors.ImageSharp.Processing.ColorStop[],SixLabors.ImageSharp.Processing.GradientRepetitionMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.GradientBrush.GradientBrushApplicator`1"/> class.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="options">The options.</param>
+            <param name="colorStops">An array of color stops sorted by their position.</param>
+            <param name="repetitionMode">Defines if and how the gradient should be repeated.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.GradientBrush.GradientBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Base implementation of the indexer for gradients
+            (follows the facade pattern, using abstract methods)
+            </summary>
+            <param name="x">X coordinate of the Pixel.</param>
+            <param name="y">Y coordinate of the Pixel.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.GradientBrush.GradientBrushApplicator`1.PositionOnGradient(System.Single,System.Single)">
+            <summary>
+            calculates the position on the gradient for a given point.
+            This method is abstract as it's content depends on the shape of the gradient.
+            </summary>
+            <param name="x">The x coordinate of the point</param>
+            <param name="y">The y coordinate of the point</param>
+            <returns>
+            The position the given point has on the gradient.
+            The position is not bound to the [0..1] interval.
+            Values outside of that interval may be treated differently,
+            e.g. for the <see cref="T:SixLabors.ImageSharp.Processing.GradientRepetitionMode" /> enum.
+            </returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.GradientRepetitionMode">
+            <summary>
+            Modes to repeat a gradient.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.GradientRepetitionMode.None">
+            <summary>
+            don't repeat, keep the color of start and end beyond those points stable.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.GradientRepetitionMode.Repeat">
+            <summary>
+            Repeat the gradient.
+            If it's a black-white gradient, with Repeat it will be Black->{gray}->White|Black->{gray}->White|...
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.GradientRepetitionMode.Reflect">
+            <summary>
+            Reflect the gradient.
+            Similar to <see cref="F:SixLabors.ImageSharp.Processing.GradientRepetitionMode.Repeat"/>, but each other repetition uses inverse order of <see cref="T:SixLabors.ImageSharp.Processing.ColorStop"/>s.
+            Used on a Black-White gradient, Reflect leads to Black->{gray}->White->{gray}->White...
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.GradientRepetitionMode.DontFill">
+            <summary>
+            With DontFill a gradient does not touch any pixel beyond it's borders.
+            For the <see cref="T:SixLabors.ImageSharp.Processing.LinearGradientBrush" /> this is beyond the orthogonal through start and end,
+            TODO For the cref="PolygonalGradientBrush" it's outside the polygon,
+            For <see cref="T:SixLabors.ImageSharp.Processing.RadialGradientBrush" /> and <see cref="T:SixLabors.ImageSharp.Processing.EllipticGradientBrush" /> it's beyond 1.0.
+            </summary>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.IBrush">
+            <summary>
+            Brush represents a logical configuration of a brush which can be used to source pixel colors
+            </summary>
+            <remarks>
+            A brush is a simple class that will return an <see cref="T:SixLabors.ImageSharp.Processing.BrushApplicator`1" /> that will perform the
+            logic for retrieving pixel values for specific locations.
+            </remarks>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.IBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Creates the applicator for this brush.
+            </summary>
+            <typeparam name="TPixel">The pixel type.</typeparam>
+            <param name="source">The source image.</param>
+            <param name="region">The region the brush will be applied to.</param>
+            <param name="options">The graphic options</param>
+            <returns>
+            The brush applicator for this brush
+            </returns>
+            <remarks>
+            The <paramref name="region" /> when being applied to things like shapes would usually be the
+            bounding box of the shape not necessarily the bounds of the whole image
+            </remarks>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.ImageBrush">
+            <summary>
+            Provides an implementation of an image brush for painting images within areas.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.ImageBrush.image">
+            <summary>
+            The image to paint.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ImageBrush.#ctor(SixLabors.ImageSharp.Image)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.ImageBrush"/> class.
+            </summary>
+            <param name="image">The image.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ImageBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1">
+            <summary>
+            The image brush applicator.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.yLength">
+            <summary>
+            The y-length.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.xLength">
+            <summary>
+            The x-length.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.offsetY">
+            <summary>
+            The Y offset.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.offsetX">
+            <summary>
+            The X offset.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.Image{`0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1"/> class.
+            </summary>
+            <param name="target">The target image.</param>
+            <param name="image">The image.</param>
+            <param name="region">The region.</param>
+            <param name="options">The options</param>
+            <param name="shouldDisposeImage">Whether to dispose the image on disposal of the applicator.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the color for a single pixel.
+            </summary>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>
+            The color
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.ImageBrush.ImageBrushApplicator`1.Apply(System.Span{System.Single},System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.IPen">
+            <summary>
+            Interface representing the pattern and size of the stroke to apply with a Pen.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.IPen.StrokeFill">
+            <summary>
+            Gets the stroke fill.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.IPen.StrokeWidth">
+            <summary>
+            Gets the width to apply to the stroke
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.IPen.StrokePattern">
+            <summary>
+            Gets the stoke pattern.
+            </summary>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.LinearGradientBrush">
+            <summary>
+            Provides an implementation of a brush for painting linear gradients within areas.
+            Supported right now:
+            - a set of colors in relative distances to each other.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.LinearGradientBrush.#ctor(SixLabors.Primitives.PointF,SixLabors.Primitives.PointF,SixLabors.ImageSharp.Processing.GradientRepetitionMode,SixLabors.ImageSharp.Processing.ColorStop[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.LinearGradientBrush"/> class.
+            </summary>
+            <param name="p1">Start point</param>
+            <param name="p2">End point</param>
+            <param name="repetitionMode">defines how colors are repeated.</param>
+            <param name="colorStops"><inheritdoc /></param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.LinearGradientBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1">
+            <summary>
+            The linear gradient brush applicator.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.alongX">
+            <summary>
+            the vector along the gradient, x component
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.alongY">
+            <summary>
+            the vector along the gradient, y component
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.acrossY">
+            <summary>
+            the vector perpendicular to the gradient, y component
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.acrossX">
+            <summary>
+            the vector perpendicular to the gradient, x component
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.alongsSquared">
+            <summary>
+            the result of <see cref="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.alongX"/>^2 + <see cref="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.alongY"/>^2
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.length">
+            <summary>
+            the length of the defined gradient (between source and end)
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.Primitives.PointF,SixLabors.Primitives.PointF,SixLabors.ImageSharp.Processing.ColorStop[],SixLabors.ImageSharp.Processing.GradientRepetitionMode,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.LinearGradientBrush.LinearGradientBrushApplicator`1" /> class.
+            </summary>
+            <param name="source">The source</param>
+            <param name="start">start point of the gradient</param>
+            <param name="end">end point of the gradient</param>
+            <param name="colorStops">tuple list of colors and their respective position between 0 and 1 on the line</param>
+            <param name="repetitionMode">defines how the gradient colors are repeated.</param>
+            <param name="options">the graphics options</param>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.PathGradientBrush">
+            <summary>
+            Provides an implementation of a brush for painting gradients between multiple color positions in 2D coordinates.
+            It works similarly with the class in System.Drawing.Drawing2D of the same name.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PathGradientBrush.#ctor(SixLabors.Shapes.ILineSegment[],SixLabors.ImageSharp.Color[],SixLabors.ImageSharp.Color)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PathGradientBrush"/> class.
+            </summary>
+            <param name="lines">Line segments of a polygon that represents the gradient area.</param>
+            <param name="colors">Array of colors that correspond to each point in the polygon.</param>
+            <param name="centerColor">Color at the center of the gradient area to which the other colors converge.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PathGradientBrush.#ctor(SixLabors.Shapes.ILineSegment[],SixLabors.ImageSharp.Color[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PathGradientBrush"/> class.
+            </summary>
+            <param name="lines">Line segments of a polygon that represents the gradient area.</param>
+            <param name="colors">Array of colors that correspond to each point in the polygon.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PathGradientBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.PathGradientBrush.Edge">
+            <summary>
+            An edge of the polygon that represents the gradient area.
+            </summary>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.PathGradientBrush.PathGradientBrushApplicator`1">
+            <summary>
+            The path gradient brush applicator.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PathGradientBrush.PathGradientBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.Shapes.Path,System.Collections.Generic.IList{SixLabors.ImageSharp.Processing.PathGradientBrush.Edge},SixLabors.ImageSharp.Color,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PathGradientBrush.PathGradientBrushApplicator`1"/> class.
+            </summary>
+            <param name="source">The source image.</param>
+            <param name="path">A polygon that represents the gradient area.</param>
+            <param name="edges">Edges of the polygon.</param>
+            <param name="centerColor">Color at the center of the gradient area to which the other colors converge.</param>
+            <param name="options">The options.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.PathGradientBrush.PathGradientBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PathGradientBrush.PathGradientBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.PatternBrush">
+            <summary>
+            Provides an implementation of a pattern brush for painting patterns.
+            </summary>
+            <remarks>
+            The patterns that are used to create a custom pattern brush are made up of a repeating matrix of flags,
+            where each flag denotes whether to draw the foreground color or the background color.
+            so to create a new bool[,] with your flags
+            <para>
+            For example if you wanted to create a diagonal line that repeat every 4 pixels you would use a pattern like so
+            1000
+            0100
+            0010
+            0001
+            </para>
+            <para>
+            or you want a horizontal stripe which is 3 pixels apart you would use a pattern like
+             1
+             0
+             0
+            </para>
+            </remarks>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.PatternBrush.pattern">
+            <summary>
+            The pattern.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.#ctor(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color,System.Boolean[0:,0:])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/> class.
+            </summary>
+            <param name="foreColor">Color of the fore.</param>
+            <param name="backColor">Color of the back.</param>
+            <param name="pattern">The pattern.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.#ctor(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Primitives.DenseMatrix{System.Boolean}@)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/> class.
+            </summary>
+            <param name="foreColor">Color of the fore.</param>
+            <param name="backColor">Color of the back.</param>
+            <param name="pattern">The pattern.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.#ctor(SixLabors.ImageSharp.Processing.PatternBrush)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush"/> class.
+            </summary>
+            <param name="brush">The brush.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1">
+            <summary>
+            The pattern brush applicator.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1.pattern">
+            <summary>
+            The pattern.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.Primitives.DenseMatrix{`0}@,SixLabors.ImageSharp.Primitives.DenseMatrix{System.Numerics.Vector4},SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1" /> class.
+            </summary>
+            <param name="source">The source image.</param>
+            <param name="pattern">The pattern.</param>
+            <param name="patternVector">The patternVector.</param>
+            <param name="options">The options</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the color for a single pixel.
+            </summary>#
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>
+            The Color.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.PatternBrush.PatternBrushApplicator`1.Apply(System.Span{System.Single},System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Pen">
+            <summary>
+            Provides a pen that can apply a pattern to a line with a set brush and thickness
+            </summary>
+            <remarks>
+            The pattern will be in to the form of new float[]{ 1f, 2f, 0.5f} this will be
+            converted into a pattern that is 3.5 times longer that the width with 3 sections
+            section 1 will be width long (making a square) and will be filled by the brush
+            section 2 will be width * 2 long and will be empty
+            section 3 will be width/2 long and will be filled
+            the the pattern will immediately repeat without gap.
+            </remarks>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pen.#ctor(SixLabors.ImageSharp.Color,System.Single,System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Pen"/> class.
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <param name="pattern">The pattern.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pen.#ctor(SixLabors.ImageSharp.Processing.IBrush,System.Single,System.Single[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Pen"/> class.
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <param name="pattern">The pattern.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pen.#ctor(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Pen"/> class.
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pen.#ctor(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Pen"/> class.
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Pen.StrokeFill">
+            <inheritdoc/>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Pen.StrokeWidth">
+            <inheritdoc/>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Pen.StrokePattern">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Pens">
+            <summary>
+            Contains a collection of common Pen styles
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Solid(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Create a solid pen with out any drawing patterns
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Solid(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Create a solid pen with out any drawing patterns
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Dash(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Create a pen with a 'Dash' drawing patterns
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Dash(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Create a pen with a 'Dash' drawing patterns
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Dot(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Create a pen with a 'Dot' drawing patterns
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.Dot(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Create a pen with a 'Dot' drawing patterns
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.DashDot(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Create a pen with a 'Dash Dot' drawing patterns
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.DashDot(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Create a pen with a 'Dash Dot' drawing patterns
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.DashDotDot(SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Create a pen with a 'Dash Dot Dot' drawing patterns
+            </summary>
+            <param name="color">The color.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Pens.DashDotDot(SixLabors.ImageSharp.Processing.IBrush,System.Single)">
+            <summary>
+            Create a pen with a 'Dash Dot Dot' drawing patterns
+            </summary>
+            <param name="brush">The brush.</param>
+            <param name="width">The width.</param>
+            <returns>The Pen</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor">
+            <summary>
+            Combines two images together by blending the pixels.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.#ctor(SixLabors.ImageSharp.Image,SixLabors.Primitives.Point,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,SixLabors.ImageSharp.PixelFormats.PixelAlphaCompositionMode,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor"/> class.
+            </summary>
+            <param name="image">The image to blend.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="colorBlendingMode">The blending mode to use when drawing the image.</param>
+            <param name="alphaCompositionMode">The Alpha blending mode to use when drawing the image.</param>
+            <param name="opacity">The opacity of the image to blend.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.Image">
+            <summary>
+            Gets the image to blend.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.Location">
+            <summary>
+            Gets the location to draw the blended image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.ColorBlendingMode">
+            <summary>
+            Gets the blending mode to use when drawing the image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.AlphaCompositionMode">
+            <summary>
+            Gets the Alpha blending mode to use when drawing the image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.Opacity">
+            <summary>
+            Gets the opacity of the image to blend.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor.CreatePixelSpecificProcessor``1(SixLabors.ImageSharp.Image{``0},SixLabors.Primitives.Rectangle)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2">
+            <summary>
+            Combines two images together by blending the pixels.
+            </summary>
+            <typeparam name="TPixelBg">The pixel format of destination image.</typeparam>
+            <typeparam name="TPixelFg">The pixel format of source image.</typeparam>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.#ctor(SixLabors.ImageSharp.Image{`1},SixLabors.ImageSharp.Image{`0},SixLabors.Primitives.Rectangle,SixLabors.Primitives.Point,SixLabors.ImageSharp.PixelFormats.PixelColorBlendingMode,SixLabors.ImageSharp.PixelFormats.PixelAlphaCompositionMode,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2"/> class.
+            </summary>
+            <param name="image">The foreground <see cref="T:SixLabors.ImageSharp.Image`1"/> to blend with the currently processing image.</param>
+            <param name="source">The source <see cref="T:SixLabors.ImageSharp.Image`1"/> for the current processor instance.</param>
+            <param name="sourceRectangle">The source area to process for the current processor instance.</param>
+            <param name="location">The location to draw the blended image.</param>
+            <param name="colorBlendingMode">The blending mode to use when drawing the image.</param>
+            <param name="alphaCompositionMode">The Alpha blending mode to use when drawing the image.</param>
+            <param name="opacity">The opacity of the image to blend. Must be between 0 and 1.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.Image">
+            <summary>
+            Gets the image to blend
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.Opacity">
+            <summary>
+            Gets the opacity of the image to blend
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.Blender">
+            <summary>
+            Gets the pixel blender
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.Location">
+            <summary>
+            Gets the location to draw the blended image
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.DrawImageProcessor`2.OnFrameApply(SixLabors.ImageSharp.ImageFrame{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor">
+            <summary>
+            Defines a processor to fill an <see cref="T:SixLabors.ImageSharp.Image"/> with the given <see cref="T:SixLabors.ImageSharp.Processing.IBrush"/>
+            using blending defined by the given <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/>.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor.#ctor(SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor"/> class.
+            </summary>
+            <param name="brush">The brush to use for filling.</param>
+            <param name="options">The <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/> defining how to blend the brush pixels over the image pixels.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor.Brush">
+            <summary>
+            Gets the <see cref="T:SixLabors.ImageSharp.Processing.IBrush"/> used for filling the destination image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor.Options">
+            <summary>
+            Gets the <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/> defining how to blend the brush pixels over the image pixels.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor.CreatePixelSpecificProcessor``1(SixLabors.ImageSharp.Image{``0},SixLabors.Primitives.Rectangle)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor`1">
+            <summary>
+            Using the brush as a source of pixels colors blends the brush color with source.
+            </summary>
+            <typeparam name="TPixel">The pixel format.</typeparam>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillProcessor`1.OnFrameApply(SixLabors.ImageSharp.ImageFrame{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor">
+            <summary>
+            Defines a processor to fill <see cref="T:SixLabors.ImageSharp.Image"/> pixels withing a given <see cref="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.Region"/>
+            with the given <see cref="T:SixLabors.ImageSharp.Processing.IBrush"/> and blending defined by the given <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/>.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.#ctor(SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Primitives.Region,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor" /> class.
+            </summary>
+            <param name="brush">The details how to fill the region of interest.</param>
+            <param name="region">The region of interest to be filled.</param>
+            <param name="options">The configuration options.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.Brush">
+            <summary>
+            Gets the <see cref="T:SixLabors.ImageSharp.Processing.IBrush"/> used for filling the destination image.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.Region">
+            <summary>
+            Gets the region that this processor applies to.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.Options">
+            <summary>
+            Gets the <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/> defining how to blend the brush pixels over the image pixels.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor.CreatePixelSpecificProcessor``1(SixLabors.ImageSharp.Image{``0},SixLabors.Primitives.Rectangle)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor`1">
+            <summary>
+            Using a brush and a shape fills shape with contents of brush the
+            </summary>
+            <typeparam name="TPixel">The type of the color.</typeparam>
+            <seealso cref="T:SixLabors.ImageSharp.Processing.Processors.ImageProcessor`1" />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Drawing.FillRegionProcessor`1.OnFrameApply(SixLabors.ImageSharp.ImageFrame{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor">
+            <summary>
+            Defines a processor to draw text on an <see cref="T:SixLabors.ImageSharp.Image"/>.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.#ctor(SixLabors.ImageSharp.Processing.TextGraphicsOptions,System.String,SixLabors.Fonts.Font,SixLabors.ImageSharp.Processing.IBrush,SixLabors.ImageSharp.Processing.IPen,SixLabors.Primitives.PointF)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor"/> class.
+            </summary>
+            <param name="options">The options</param>
+            <param name="text">The text we want to render</param>
+            <param name="font">The font we want to render with</param>
+            <param name="brush">The brush to source pixel colors from.</param>
+            <param name="pen">The pen to outline text with.</param>
+            <param name="location">The location on the image to start drawing the text from.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Brush">
+            <summary>
+            Gets the brush used to fill the glyphs.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Options">
+            <summary>
+            Gets the <see cref="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions"/> defining blending modes and text-specific drawing settings.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Text">
+            <summary>
+            Gets the text to draw.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Pen">
+            <summary>
+            Gets the pen used for outlining the text, if Null then we will not outline
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Font">
+            <summary>
+            Gets the font used to render the text.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.Location">
+            <summary>
+            Gets the location to draw the text at.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor.CreatePixelSpecificProcessor``1(SixLabors.ImageSharp.Image{``0},SixLabors.Primitives.Rectangle)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor`1">
+            <summary>
+            Using the brush as a source of pixels colors blends the brush color with source.
+            </summary>
+            <typeparam name="TPixel">The pixel format.</typeparam>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.Processors.Text.DrawTextProcessor`1.OnFrameApply(SixLabors.ImageSharp.ImageFrame{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.RadialGradientBrush">
+            <summary>
+            A Circular Gradient Brush, defined by center point and radius.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.#ctor(SixLabors.Primitives.PointF,System.Single,SixLabors.ImageSharp.Processing.GradientRepetitionMode,SixLabors.ImageSharp.Processing.ColorStop[])">
+            <inheritdoc cref="T:SixLabors.ImageSharp.Processing.GradientBrush" />
+            <param name="center">The center of the circular gradient and 0 for the color stops.</param>
+            <param name="radius">The radius of the circular gradient and 1 for the color stops.</param>
+            <param name="repetitionMode">Defines how the colors in the gradient are repeated.</param>
+            <param name="colorStops">the color stops as defined in base class.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},SixLabors.ImageSharp.GraphicsOptions,SixLabors.Primitives.PointF,System.Single,SixLabors.ImageSharp.Processing.ColorStop[],SixLabors.ImageSharp.Processing.GradientRepetitionMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1" /> class.
+            </summary>
+            <param name="target">The target image</param>
+            <param name="options">The options.</param>
+            <param name="center">Center point of the gradient.</param>
+            <param name="radius">Radius of the gradient.</param>
+            <param name="colorStops">Definition of colors.</param>
+            <param name="repetitionMode">How the colors are repeated beyond the first gradient.</param>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1.Dispose">
+            <inheritdoc cref="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1.Dispose" />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RadialGradientBrush.RadialGradientBrushApplicator`1.PositionOnGradient(System.Single,System.Single)">
+            <summary>
+            As this is a circular gradient, the position on the gradient is based on
+            the distance of the point to the center.
+            </summary>
+            <param name="x">The X coordinate of the target pixel.</param>
+            <param name="y">The Y coordinate of the target pixel.</param>
+            <returns>the position on the color gradient.</returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.RecolorBrush">
+            <summary>
+            Provides an implementation of a brush that can recolor an image
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RecolorBrush.#ctor(SixLabors.ImageSharp.Color,SixLabors.ImageSharp.Color,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.RecolorBrush" /> class.
+            </summary>
+            <param name="sourceColor">Color of the source.</param>
+            <param name="targetColor">Color of the target.</param>
+            <param name="threshold">The threshold as a value between 0 and 1.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.RecolorBrush.Threshold">
+            <summary>
+            Gets the threshold.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.RecolorBrush.SourceColor">
+            <summary>
+            Gets the source color.
+            </summary>
+            <value>
+            The color of the source.
+            </value>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.RecolorBrush.TargetColor">
+            <summary>
+            Gets the target color.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RecolorBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1">
+            <summary>
+            The recolor brush applicator.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.sourceColor">
+            <summary>
+            The source color.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.targetColor">
+            <summary>
+            The target color.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.threshold">
+            <summary>
+            The threshold.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},`0,`0,System.Single,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1" /> class.
+            </summary>
+            <param name="source">The source image.</param>
+            <param name="sourceColor">Color of the source.</param>
+            <param name="targetColor">Color of the target.</param>
+            <param name="threshold">The threshold .</param>
+            <param name="options">The options</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the color for a single pixel.
+            </summary>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>
+            The color
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.RecolorBrush.RecolorBrushApplicator`1.Apply(System.Span{System.Single},System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.SolidBrush">
+            <summary>
+            Provides an implementation of a solid brush for painting solid color areas.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.SolidBrush.color">
+            <summary>
+            The color to paint.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.SolidBrush.#ctor(SixLabors.ImageSharp.Color)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.SolidBrush"/> class.
+            </summary>
+            <param name="color">The color.</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.SolidBrush.Color">
+            <summary>
+            Gets the color.
+            </summary>
+            <value>
+            The color.
+            </value>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.SolidBrush.CreateApplicator``1(SixLabors.ImageSharp.ImageFrame{``0},SixLabors.Primitives.RectangleF,SixLabors.ImageSharp.GraphicsOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1">
+            <summary>
+            The solid brush applicator.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1.#ctor(SixLabors.ImageSharp.ImageFrame{`0},`0,SixLabors.ImageSharp.GraphicsOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1"/> class.
+            </summary>
+            <param name="source">The source image.</param>
+            <param name="color">The color.</param>
+            <param name="options">The options</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1.Colors">
+            <summary>
+            Gets the colors.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the color for a single pixel.
+            </summary>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+            <returns>
+            The color
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.SolidBrush.SolidBrushApplicator`1.Apply(System.Span{System.Single},System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions">
+            <summary>
+            Options for influencing the drawing functions.
+            </summary>
+        </member>
+        <member name="F:SixLabors.ImageSharp.Processing.TextGraphicsOptions.Default">
+            <summary>
+            Represents the default <see cref="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions"/>.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.TextGraphicsOptions.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions" /> struct.
+            </summary>
+            <param name="enableAntialiasing">If set to <c>true</c> [enable antialiasing].</param>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.Antialias">
+            <summary>
+            Gets or sets a value indicating whether antialiasing should be applied.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.AntialiasSubpixelDepth">
+            <summary>
+            Gets or sets a value indicating the number of subpixels to use while rendering with antialiasing enabled.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.BlendPercentage">
+            <summary>
+            Gets or sets a value indicating the blending percentage to apply to the drawing operation
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.ColorBlendingMode">
+            <summary>
+            Gets or sets a value indicating the color blending percentage to apply to the drawing operation
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.AlphaCompositionMode">
+            <summary>
+            Gets or sets a value indicating the color blending percentage to apply to the drawing operation
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.ApplyKerning">
+            <summary>
+            Gets or sets a value indicating whether the text should be drawing with kerning enabled.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.TabWidth">
+            <summary>
+            Gets or sets a value indicating the number of space widths a tab should lock to.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.WrapTextWidth">
+            <summary>
+            Gets or sets a value indicating if greater than zero determine the width at which text should wrap.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.DpiX">
+            <summary>
+            Gets or sets a value indicating the DPI to render text along the X axis.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.DpiY">
+            <summary>
+            Gets or sets a value indicating the DPI to render text along the Y axis.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.HorizontalAlignment">
+            <summary>
+            Gets or sets a value indicating how to align the text relative to the rendering space.
+            If <see cref="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.WrapTextWidth"/> is greater than zero it will align relative to the space
+            defined by the location and width, if <see cref="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.WrapTextWidth"/> equals zero, and thus
+            wrapping disabled, then the alignment is relative to the drawing location.
+            </summary>
+        </member>
+        <member name="P:SixLabors.ImageSharp.Processing.TextGraphicsOptions.VerticalAlignment">
+            <summary>
+            Gets or sets a value indicating how to align the text relative to the rendering space.
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.TextGraphicsOptions.op_Implicit(SixLabors.ImageSharp.GraphicsOptions)~SixLabors.ImageSharp.Processing.TextGraphicsOptions">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/> to <see cref="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions"/>.
+            </summary>
+            <param name="options">The options.</param>
+            <returns>
+            The result of the conversion.
+            </returns>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Processing.TextGraphicsOptions.op_Explicit(SixLabors.ImageSharp.Processing.TextGraphicsOptions)~SixLabors.ImageSharp.GraphicsOptions">
+            <summary>
+            Performs an explicit conversion from <see cref="T:SixLabors.ImageSharp.Processing.TextGraphicsOptions"/> to <see cref="T:SixLabors.ImageSharp.GraphicsOptions"/>.
+            </summary>
+            <param name="options">The options.</param>
+            <returns>
+            The result of the conversion.
+            </returns>
+        </member>
+        <member name="T:SixLabors.ImageSharp.Utils.QuickSort">
+            <summary>
+            Optimized quick sort implementation for Span{float} input
+            </summary>
+        </member>
+        <member name="M:SixLabors.ImageSharp.Utils.QuickSort.Sort(System.Span{System.Single})">
+            <summary>
+            Sorts the elements of <paramref name="data"/> in ascending order
+            </summary>
+            <param name="data">The items to sort</param>
+        </member>
+    </members>
+</doc>

@@ -17,10 +17,10 @@ namespace ComputerVision
         private static string subscriptionKey = "fffa68a1025f48ebbfae1b5f19e1397e";
         private static readonly string objectDetectionEndpoint = "https://roomextractioncv.cognitiveservices.azure.com/";
 
-        private static string storeLocation = @"E:\PSIVideoStores\computerVision";
+        private static string storeLocation = @"psiStore";
         //private static string videoPath = @"E:\videos\Kamera\Team 01\MAH00096.MP4";
-        private static string videoPath = @"E:\videos\Action Cam\Team 01\2020_0110_100102_003A.MOV";
-        //private static string videoPath = @"E:\videos\snippedVersion.mp4";
+        private static string videoPath = @"E:\videos\Action Cam\Team 11\2020_0120_093453_003A.MOV";
+        //private static string videoPath = @"E:\videos\facedetectionTest.mp4";
 
 
         static void Main(string[] args)
@@ -36,7 +36,8 @@ namespace ComputerVision
                 }
 
                 MediaSource ms = new MediaSource(p, videoPath);
-                ms.Image.Write("image", store);
+                //MediaSource ms2 = ms.DeepClone();
+                //ms.Image.Write("image", store);
 
                 ImageAnalyzerConfiguration objectDetectionConfig = new ImageAnalyzerConfiguration(subscriptionKey, "trial")
                 {
@@ -50,56 +51,70 @@ namespace ComputerVision
                 };
                 ImageAnalyzer objectDetector = new ImageAnalyzer(p, objectDetectionConfig);
 
-                ms.Image.Delay(TimeSpan.FromMilliseconds(1000)).Process<Shared<Image>, Shared<Image>>(
+                ms.Image.Delay(TimeSpan.FromMilliseconds(200)).Process<Shared<Image>, Shared<Image>>(
                     (x, e, o) =>
                     {
-                        if (e.SequenceId % 2 == 0)
+                        if (e.SequenceId % 120 == 0)
                         {
-                            //Console.WriteLine("sequenceId: " + e.SequenceId);
-                            //Console.WriteLine("Process pipe to object detection: " + e.OriginatingTime);
                             o.Post(x, e.OriginatingTime);
-
                         }
                     }).PipeTo(objectDetector.In);
 
+                //objectDetector.Out.Write("computerVision response", store);
 
-                //ms.Image.PipeTo(objectDetector.In, DeliveryPolicy.LatestMessage);
-                objectDetector.Out.Write("computerVision response", store);
-                //objectDetector.Out.Do((t, e) => { if (t != null) Console.WriteLine("detected objects: " + t.Description.Captions[0].Text); else Console.WriteLine("nothing was returned"); });
+                //ObjectVisualizer objVis = new ObjectVisualizer(p);
 
-                ObjectVisualizer objVis = new ObjectVisualizer(p);
+                ExportFrameInfo analyseComp = new ExportFrameInfo(p, "Test001");
 
                 var imageVisData = objectDetector.Out.Join(ms.Image);
 
-                imageVisData.Out.Item2().PipeTo(objVis.ImageIn);
-                imageVisData.Out.Item1().PipeTo(objVis.DetectedObjectsIn);
+                imageVisData.Out.Item2().PipeTo(analyseComp.Image1In);
+                imageVisData.Out.Item1().PipeTo(analyseComp.DetectedObjectsIn);
 
-                //imageVisData.Out.PipeTo(objVis.In);
+                //objVis.Out.Write("detected objects in Image", store);
 
-                //imageVisData.Out.Process<Tuple<ImageAnalysis, Shared<Image>>, Shared<Image>>(
-                //    (x, e, o) =>
+                //FaceVisualizer faceVis = new FaceVisualizer(p);
+
+                //imageVisData.Out.Item2().PipeTo(faceVis.ImageIn);
+                //imageVisData.Out.Item1().PipeTo(faceVis.DetectedFacesIn);
+
+                //faceVis.Out.Write("detected faces in Image", store);
+
+                //imageVisData.Item1().Do(
+                //    (x) =>
                 //    {
-                //        var (analyseRes, image) = x;
-                //        o.Post(image, e.OriginatingTime);
-                //    }).PipeTo(objVis.ImageIn);
+                //        Console.WriteLine("--- categories ---");
+                //        foreach (Category cat in x.Categories)
+                //        {
+                //            Console.WriteLine(cat.Name + " - " + cat.Detail + " - " + cat.Score + "\n");
+                //        }
+                //        Console.WriteLine("\n");
 
-                //objectDetector.Out.Process<ImageAnalysis, ImageAnalysis>(
-                //    (x,e,o) =>
-                //    {
-                //        Console.WriteLine("sequenceId imageAnalisis going to draw: " + e.SequenceId);
-                //        Console.WriteLine("Process pipe imageAnalisis to draw: " + e.OriginatingTime);
-                //        o.Post(x, e.OriginatingTime);
-                //    }).PipeTo(objVis.DetectedObjectsIn);
+                //        Console.WriteLine("--- color ---");
+                //        Console.WriteLine("accent color: " + x.Color.AccentColor);
+                //        Console.WriteLine("accent color: " + x.Color.DominantColorBackground);
+                //        Console.WriteLine("accent color: " + x.Color.DominantColorForeground);
+                //        Console.WriteLine(" -- dominant colors: -- ");
+                //        foreach (string col in x.Color.DominantColors)
+                //        {
+                //            Console.WriteLine(" - " + col + "\n");
+                //        }
+                //        Console.WriteLine("\n");
 
-                //ms.Image.Process<Shared<Image>, Shared<Image>>(
-                //    (x, e, o) =>
-                //    {
-                //        Console.WriteLine("sequenceId Shared image going to draw: " + e.SequenceId);
-                //        Console.WriteLine("Process pipe Shared image to draw: " + e.OriginatingTime);
-                //        o.Post(x, e.OriginatingTime);
-                //    }).PipeTo(objVis.ImageIn);
+                //        Console.WriteLine("--- description ---");
+                //        Console.WriteLine(" -- captions: -- ");
+                //        foreach (ImageCaption cap in x.Description.Captions)
+                //        {
+                //            Console.WriteLine(cap.Text + ": " + cap.Confidence + "\n");
+                //        }
 
-                objVis.Out.Write("detected objects in Image", store);
+                //        Console.WriteLine(" -- tags: -- ");
+                //        foreach (string tag in x.Description.Tags)
+                //        {
+                //            Console.WriteLine(" - " + tag + "\n");
+                //        }
+                //        Console.WriteLine("\n");
+                //    });
 
                 p.PipelineCompleted += P_PipelineCompleted;
 
@@ -113,6 +128,7 @@ namespace ComputerVision
         private static void P_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Done!");
+            Console.ReadKey(true);
         }
     }
 }
