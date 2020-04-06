@@ -1,0 +1,17 @@
+﻿<Window x:Class="CompareData.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompareData"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="220.612" Width="347.493">
+    <Grid>
+        <Button Content="Video 1" HorizontalAlignment="Left" Margin="46,80,0,0" VerticalAlignment="Top" Width="101"/>
+        <Button Content="Video 2" Margin="193,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="101"/>
+        <Label Content="No 2 videos yet" HorizontalAlignment="Left" Margin="193,128,0,0" VerticalAlignment="Top" Width="101"/>
+        <Button Content="Analyze" HorizontalAlignment="Left" Margin="46,128,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Content="Choose 2 videos and analyze them afterwards" HorizontalAlignment="Left" Margin="46,25,0,0" VerticalAlignment="Top" Width="259" Height="24"/>
+
+    </Grid>
+</Window>

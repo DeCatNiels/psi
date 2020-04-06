@@ -265,3 +265,5 @@ paket-files/
 /_site/
 /.sass-cache/
 Gemfile.lock
+/ComputerVision/ComputerVisionAnalyzing/Test001
+/ComputerVision/psiStore

@@ -200,6 +200,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerVision", "ComputerV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawObjects", "DrawObjects\DrawObjects.csproj", "{31E7DC70-360F-44DA-BA21-1113779DCE2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompareData", "CompareData\CompareData.csproj", "{41A44B91-3D59-4C11-9242-8D4EC42E1BDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -442,6 +444,10 @@ Global
 		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31E7DC70-360F-44DA-BA21-1113779DCE2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A44B91-3D59-4C11-9242-8D4EC42E1BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A44B91-3D59-4C11-9242-8D4EC42E1BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A44B91-3D59-4C11-9242-8D4EC42E1BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A44B91-3D59-4C11-9242-8D4EC42E1BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -527,6 +533,7 @@ Global
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
 		{6CDF5EA1-6C5C-448E-9701-8E2672C1A92C} = {982549B3-5786-4F3B-A92A-2400E056BC39}
 		{31E7DC70-360F-44DA-BA21-1113779DCE2B} = {982549B3-5786-4F3B-A92A-2400E056BC39}
+		{41A44B91-3D59-4C11-9242-8D4EC42E1BDD} = {982549B3-5786-4F3B-A92A-2400E056BC39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}
