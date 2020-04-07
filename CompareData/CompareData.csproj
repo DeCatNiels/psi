@@ -69,6 +69,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProgressStates\AnalyzingState.cs" />
+    <Compile Include="ProgressStates\DoneState.cs" />
+    <Compile Include="ProgressStates\NotEnoughFilesState.cs" />
+    <Compile Include="Progress.cs" />
+    <Compile Include="ProgressStates\ProgressState.cs" />
+    <Compile Include="ProgressStates\ReadyToAnalyzeState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

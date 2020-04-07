@@ -7,10 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="220.612" Width="347.493">
     <Grid>
-        <Button Content="Video 1" HorizontalAlignment="Left" Margin="46,80,0,0" VerticalAlignment="Top" Width="101"/>
-        <Button Content="Video 2" Margin="193,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="101"/>
-        <Label Content="No 2 videos yet" HorizontalAlignment="Left" Margin="193,128,0,0" VerticalAlignment="Top" Width="101"/>
-        <Button Content="Analyze" HorizontalAlignment="Left" Margin="46,128,0,0" VerticalAlignment="Top" Width="101"/>
+        <Button x:Name="addVideo_Button" Content="Add Video" HorizontalAlignment="Left" Margin="46,80,0,0" VerticalAlignment="Top" Width="101" Click="Video1_Button_Click"/>
+        <Label x:Name="progress_Label" Content="No 2 videos yet" HorizontalAlignment="Left" Margin="46,128,0,0" VerticalAlignment="Top" Width="248" Height="52"/>
+        <Button x:Name="analyze_Button" Content="Analyze" HorizontalAlignment="Left" Margin="193,80,0,0" VerticalAlignment="Top" Width="101" Click="Analyze_Button_Click"/>
         <Label Content="Choose 2 videos and analyze them afterwards" HorizontalAlignment="Left" Margin="46,25,0,0" VerticalAlignment="Top" Width="259" Height="24"/>
 
     </Grid>
