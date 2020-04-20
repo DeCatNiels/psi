@@ -270,8 +270,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
                 new ApiKeyServiceClientCredentials(this.configuration.SubscriptionKey),
                 new System.Net.Http.DelegatingHandler[] { })
             {
-                // Endpoint = "https://westus.api.cognitive.microsoft.com/",
-                Endpoint = "https://roomextractioncv.cognitiveservices.azure.com/",
+                Endpoint = this.configuration.Endpoint,
             };
         }
     }

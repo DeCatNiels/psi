@@ -15,12 +15,13 @@ namespace CompareData
 
         public override void NextStep()
         {
-            throw new NotImplementedException();
+            this._progress.ProgressState = new AnalyzingState();
+            this._progress.ProgressState.SetProgress(this._progress);
         }
 
         public override void UndoStep()
         {
-            throw new NotImplementedException();
+            this._progress.ProgressState = new NotEnoughFilesState();
         }
     }
 }

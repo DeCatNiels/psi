@@ -17,6 +17,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// <param name="source">The source stream of images.</param>
         /// <param name="subscriptionKey">The Azure subscription key to use.</param>
         /// <param name="region">The region for the Azure subscription.</param>
+        /// <param name="endpoint">The endpoint for the Azure subscription.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of tags for each image.</returns>
         /// <remarks>
@@ -24,9 +25,9 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// subscription key is required to use this operator. For more information, see the full direct API for.
         /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
         /// </remarks>
-        public static IProducer<IList<ImageTag>> GetTags(this IProducer<Shared<Imaging.Image>> source, string subscriptionKey, string region, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<IList<ImageTag>> GetTags(this IProducer<Shared<Imaging.Image>> source, string subscriptionKey, string region, string endpoint, DeliveryPolicy deliveryPolicy = null)
         {
-            var imageAnalyzer = new ImageAnalyzer(source.Out.Pipeline, new ImageAnalyzerConfiguration(subscriptionKey, region, VisualFeatureTypes.Tags));
+            var imageAnalyzer = new ImageAnalyzer(source.Out.Pipeline, new ImageAnalyzerConfiguration(subscriptionKey, region, endpoint, VisualFeatureTypes.Tags));
             source.PipeTo(imageAnalyzer.In, deliveryPolicy);
             return imageAnalyzer.Out.Select(ia => ia?.Tags);
         }
@@ -37,6 +38,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// <param name="source">The source stream of images.</param>
         /// <param name="subscriptionKey">The Azure subscription key to use.</param>
         /// <param name="region">The region for the Azure subscription.</param>
+        /// <param name="endpoint">The endpoint for the Azure subscription.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of detected objects for each image.</returns>
         /// <remarks>
@@ -44,9 +46,9 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// subscription key is required to use this operator. For more information, see the full direct API for.
         /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
         /// </remarks>
-        public static IProducer<IList<DetectedObject>> DetectObjects(this IProducer<Shared<Imaging.Image>> source, string subscriptionKey, string region, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<IList<DetectedObject>> DetectObjects(this IProducer<Shared<Imaging.Image>> source, string subscriptionKey, string region, string endpoint, DeliveryPolicy deliveryPolicy = null)
         {
-            var imageAnalyzer = new ImageAnalyzer(source.Out.Pipeline, new ImageAnalyzerConfiguration(subscriptionKey, region, VisualFeatureTypes.Objects));
+            var imageAnalyzer = new ImageAnalyzer(source.Out.Pipeline, new ImageAnalyzerConfiguration(subscriptionKey, region, endpoint, VisualFeatureTypes.Objects));
             source.PipeTo(imageAnalyzer.In, deliveryPolicy);
             return imageAnalyzer.Out.Select(ia => ia?.Objects);
         }

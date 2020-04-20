@@ -15,11 +15,13 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// </summary>
         /// <param name="subscriptionKey">The Azure subscription key to use.</param>
         /// <param name="region">The region for the Azure subscription.</param>
+        /// <param name="endpoint">The endpoint for the Azure subscription.</param>
         /// <param name="features">The list of features to look for.</param>
-        public ImageAnalyzerConfiguration(string subscriptionKey = null, string region = null, params VisualFeatureTypes[] features)
+        public ImageAnalyzerConfiguration(string subscriptionKey = null, string region = null, string endpoint = "https://westus.api.cognitive.microsoft.com/", params VisualFeatureTypes[] features)
         {
             this.SubscriptionKey = subscriptionKey;
             this.VisualFeatures = features;
+            this.Endpoint = endpoint;
             this.Region = region;
         }
 
@@ -33,6 +35,12 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// </summary>
         /// <remarks>The region associated with the subscription key.</remarks>
         public string Region { get; set; }
+
+        /// <summary>
+        /// Gets or sets the endpoint.
+        /// </summary>
+        /// <remarks>The endpoint associated with the subscription key.</remarks>
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the list of visual features to extract from images.

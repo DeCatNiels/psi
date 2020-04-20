@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompareData"
         mc:Ignorable="d"
-        Title="MainWindow" Height="220.612" Width="347.493">
+        Title="MainWindow" Height="303.612" Width="461.493">
     <Grid>
         <Button x:Name="addVideo_Button" Content="Add Video" HorizontalAlignment="Left" Margin="46,80,0,0" VerticalAlignment="Top" Width="101" Click="Video1_Button_Click"/>
-        <Label x:Name="progress_Label" Content="No 2 videos yet" HorizontalAlignment="Left" Margin="46,128,0,0" VerticalAlignment="Top" Width="248" Height="52"/>
+        <Label x:Name="progress_Label" Content="No 2 videos yet" HorizontalAlignment="Left" Margin="46,128,0,0" VerticalAlignment="Top" Width="381" Height="52"/>
         <Button x:Name="analyze_Button" Content="Analyze" HorizontalAlignment="Left" Margin="193,80,0,0" VerticalAlignment="Top" Width="101" Click="Analyze_Button_Click"/>
         <Label Content="Choose 2 videos and analyze them afterwards" HorizontalAlignment="Left" Margin="46,25,0,0" VerticalAlignment="Top" Width="259" Height="24"/>
+        <Button x:Name="compare_Button" Content="Compare" HorizontalAlignment="Left" Margin="46,210,0,0" VerticalAlignment="Top" Width="101" Click="compare_Button_Click"/>
 
     </Grid>
 </Window>

@@ -41,12 +41,13 @@
             Represents the configuration for the <see cref="T:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer"/> component.
             </summary>
         </member>
-        <member name="M:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration.#ctor(System.String,System.String,Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models.VisualFeatureTypes[])">
+        <member name="M:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration.#ctor(System.String,System.String,System.String,Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models.VisualFeatureTypes[])">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration"/> class.
             </summary>
             <param name="subscriptionKey">The Azure subscription key to use.</param>
             <param name="region">The region for the Azure subscription.</param>
+            <param name="endpoint">The endpoint for the Azure subscription.</param>
             <param name="features">The list of features to look for.</param>
         </member>
         <member name="P:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration.SubscriptionKey">
@@ -60,6 +61,12 @@
             </summary>
             <remarks>The region associated with the subscription key.</remarks>
         </member>
+        <member name="P:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration.Endpoint">
+            <summary>
+            Gets or sets the endpoint.
+            </summary>
+            <remarks>The endpoint associated with the subscription key.</remarks>
+        </member>
         <member name="P:Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration.VisualFeatures">
             <summary>
             Gets or sets the list of visual features to extract from images.
@@ -70,13 +77,14 @@
             Stream operators and extension methods for Microsoft.Psi.CognitiveServices.Vision.
             </summary>
         </member>
-        <member name="M:Microsoft.Psi.CognitiveServices.Vision.Operators.GetTags(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy)">
+        <member name="M:Microsoft.Psi.CognitiveServices.Vision.Operators.GetTags(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,System.String,Microsoft.Psi.DeliveryPolicy)">
             <summary>
             Gets the tags associated with an images via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.
             </summary>
             <param name="source">The source stream of images.</param>
             <param name="subscriptionKey">The Azure subscription key to use.</param>
             <param name="region">The region for the Azure subscription.</param>
+            <param name="endpoint">The endpoint for the Azure subscription.</param>
             <param name="deliveryPolicy">An optional delivery policy.</param>
             <returns>A stream of tags for each image.</returns>
             <remarks>
@@ -85,13 +93,14 @@
             <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
             </remarks>
         </member>
-        <member name="M:Microsoft.Psi.CognitiveServices.Vision.Operators.DetectObjects(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy)">
+        <member name="M:Microsoft.Psi.CognitiveServices.Vision.Operators.DetectObjects(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,System.String,Microsoft.Psi.DeliveryPolicy)">
             <summary>
             Performs object detection on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.
             </summary>
             <param name="source">The source stream of images.</param>
             <param name="subscriptionKey">The Azure subscription key to use.</param>
             <param name="region">The region for the Azure subscription.</param>
+            <param name="endpoint">The endpoint for the Azure subscription.</param>
             <param name="deliveryPolicy">An optional delivery policy.</param>
             <returns>A stream of detected objects for each image.</returns>
             <remarks>

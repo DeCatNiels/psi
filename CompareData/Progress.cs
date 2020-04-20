@@ -12,6 +12,27 @@ namespace CompareData
         private ProgressState _progressState;
         private Func<string> _visualizeProgress;
 
+        private int _fileCount = 0;
+        private int _amountFilesNeeded;
+        private bool _needMoreFiles = true;
+
+        public bool NeedMoreFiles
+        {
+            get { return _needMoreFiles; }
+            set { _needMoreFiles = value; }
+        }
+        public int FileCount
+        {
+            get { return _fileCount; }
+            set { _fileCount = value; }
+        }
+        public int AmountFilesNeeded
+        {
+            get { return _amountFilesNeeded; }
+            set { _amountFilesNeeded = value; }
+        }
+
+
         // Gets or sets the state
         public ProgressState ProgressState
         {
@@ -21,13 +42,18 @@ namespace CompareData
 
         public Progress()
         {
-            this._progressState = new NotEnoughFilesState();
-            //this._visualizeProgress = visualizeProgress;
+            this.ProgressState = new NotEnoughFilesState();
+            this.ProgressState.SetProgress(this);
         }
 
-        public void AddFile()
+        public void Next()
         {
             this.ProgressState.NextStep();
+        }
+
+        public void Undo()
+        {
+            this.ProgressState.UndoStep();
         }
     }
 }

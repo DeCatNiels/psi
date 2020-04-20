@@ -4,23 +4,24 @@
     {
         public override string GetDiscription()
         {
-            return "Not all files are selected yet.\nYou need a total of " + this.AmountFilesNeeded + " files.";
+            return "Not all files are selected yet.\nYou need a total of " + this._progress.AmountFilesNeeded + " files.";
         }
 
         public override void NextStep()
         {
-            this.FileCount += 1;
-            if (this.FileCount >= this.AmountFilesNeeded)
+            this._progress.FileCount += 1;
+            if (this._progress.FileCount >= this._progress.AmountFilesNeeded)
             {
-                this.NeedMoreFiles = false;
+                this._progress.NeedMoreFiles = false;
                 this._progress.ProgressState = new ReadyToAnalyzeState();
+                this._progress.ProgressState.SetProgress(this._progress);
             }
         }
 
         public override void UndoStep()
         {
-            this.FileCount -= 1;
-            this.NeedMoreFiles = this.FileCount < this.AmountFilesNeeded;
+            this._progress.FileCount -= 1;
+            this._progress.NeedMoreFiles = this._progress.FileCount < this._progress.AmountFilesNeeded;
         }
     }
 }

@@ -14,6 +14,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ComputerVision;
+using System.Threading;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using Microsoft.Psi;
+using Microsoft.Psi.CognitiveServices.Vision;
+using Microsoft.Psi.Imaging;
+using Microsoft.Psi.Media;
+using Path = System.IO.Path;
 
 namespace CompareData
 {
@@ -23,14 +31,25 @@ namespace CompareData
     public partial class MainWindow : Window
     {
         private Progress progress;
+
+        private string apiKey = "f45886abb1e54abfad5ce83a4dbdca1b";
+        private string apiEndpoint = "https://videoanalyzing.cognitiveservices.azure.com/";
+        private string apiRegion = "WestEurope";
+        private string storeLocation = @"C:\Users\11702349\Documents\3tin\stage\psiStroreRoomData";
+        //private string storeLocation = @"E:\PSIVideoStores\computerVision";
         public MainWindow()
         {
             InitializeComponent();
+            this.videos = new List<string>();
+            this.storeCouples = new List<Tuple<string, string>>();
+            this.cognitiveServiceHandler = new CognitiveServiceHandler(apiKey, apiEndpoint, apiRegion, storeLocation);
             this.progress = new Progress();
             this.UpdateUI();
         }
 
-        private string[] videos;
+        private List<string> videos;
+        private List<Tuple<string, string>> storeCouples;
+        private CognitiveServiceHandler cognitiveServiceHandler;
 
         private void Video1_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -38,15 +57,33 @@ namespace CompareData
 
             if (videoPath != null)
             {
-                videos.Append(videoPath);
-                progress.AddFile();
+                videos.Add(videoPath);
+                progress.Next();
                 this.UpdateUI();
             }
         }
 
         private void Analyze_Button_Click(object sender, RoutedEventArgs e)
         {
-            progress.AddFile();
+            progress.Next();
+            this.UpdateUI();
+
+            Console.WriteLine("analyzing...");
+            Thread.Sleep(2000);
+
+            //CognitiveServiceHandler cognitiveServiceHandler = new CognitiveServiceHandler(apiKey, apiEndpoint, apiRegion, storeLocation);
+            List<CognitiveServices> cognitiveServices = new List<CognitiveServices>() { CognitiveServices.ObjectDetection };
+
+            //string storeNameVid1 = "objectDetection" + Path.GetFileName(videos[0]);
+            //string storeNameVid2 = "objectDetection" + Path.GetFileName(videos[1]);
+
+            cognitiveServiceHandler.RunCognitiveServices(cognitiveServices, videos, storeName: "first small test2");
+            Console.WriteLine("computer vision done!");
+            //cognitiveServiceHandler.RunCognitiveServices(cognitiveServices, videos[1], storeName: storeNameVid2);
+
+            //storeCouples.Add(Tuple.Create(storeNameVid1, storeNameVid2));
+
+            progress.Next();
             this.UpdateUI();
         }
 
@@ -65,8 +102,17 @@ namespace CompareData
         {
             progress_Label.Content = progress.ProgressState.GetDiscription();
 
-            addVideo_Button.IsEnabled = progress.ProgressState.NeedMoreFiles;
-            analyze_Button.IsEnabled = !progress.ProgressState.NeedMoreFiles;
+            addVideo_Button.IsEnabled = progress.NeedMoreFiles;
+            analyze_Button.IsEnabled = !progress.NeedMoreFiles;
+        }
+
+        private void compare_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //cognitiveServiceHandler.CompareVideoAnalasis(storeCouples[0].Item1, storeCouples[1].Item2);
+            //cognitiveServiceHandler.CompareVideoAnalasis("storedObjectDetection", "storedObjectDetection");
+            //cognitiveServiceHandler.CompareVideoAnalasis("storedObjectDetectionsnippedSpeechTest.mp4", "storedObjectDetectionsnippedVersion.mp4");
+            //cognitiveServiceHandler.CompareVideoAnalasis("objectDetection2020_0115_122025_003A.MOV", "objectDetection2020_0120_093453_003A.MOV");
+            cognitiveServiceHandler.CompareVideoAnalasis("objectDetection2020_0115_122025_003A.MOV", "objectDetection2020_0120_093453_003A.MOV");
         }
     }
 }

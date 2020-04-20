@@ -527,6 +527,7 @@ namespace Microsoft.Psi.Scheduling
             }
             catch (Exception e) when (this.errorHandler(e))
             {
+                Console.WriteLine(e.Message);
             }
             finally
             {

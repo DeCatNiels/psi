@@ -64,7 +64,7 @@ namespace ComputerVision
 
                 //ObjectVisualizer objVis = new ObjectVisualizer(p);
 
-                ExportFrameInfo analyseComp = new ExportFrameInfo(p, "Test001");
+                FrameInfoAsString analyseComp = new FrameInfoAsString(p, "Test001");
 
                 var imageVisData = objectDetector.Out.Join(ms.Image);
 
