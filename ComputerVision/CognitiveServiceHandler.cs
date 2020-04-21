@@ -76,7 +76,8 @@ namespace ComputerVision
             }
             ShellFile shellFile = ShellFile.FromFilePath(videoPaths[0]);
             int fps = Convert.ToInt32(shellFile.Properties.System.Video.FrameRate.Value / 1000);
-            int azureHandelRate = 5;
+            Console.WriteLine("fps: " + fps);
+            int azureHandelRate = 1;
             int analyzeEveryXFrames = Convert.ToInt32(fps / azureHandelRate);
 
             if(storeName == null)
@@ -87,7 +88,7 @@ namespace ComputerVision
             using (var p = Pipeline.Create("CognitiveServices objectDetection"))
             {
                 Console.WriteLine("streaming video and detected objects to store\n ...");
-                var store = Store.Create(p, storeName, StoreLocation); // make global for this class
+                var store = Store.Create(p, storeName, StoreLocation);
 
 
                 ImageAnalyzerConfiguration objectDetectionConfig = new ImageAnalyzerConfiguration(ApiKey, Region, ApiEndpoint)
@@ -101,28 +102,61 @@ namespace ComputerVision
                     }.ToArray()
                 };
 
+
+                //Parallel.ForEach(videoPaths, (videoPath) =>
+                //{
+                //    MediaSource ms = new MediaSource(p, videoPath);
+                //    ms.Image.Write("image: " + Path.GetFileName(videoPath), store);
+
+                //    ImageAnalyzer objectDetector = new ImageAnalyzer(p, objectDetectionConfig);
+
+                //    ms.Image.Delay(TimeSpan.FromMilliseconds(200)).Process<Shared<Image>, Shared<Image>>(
+                //        (x, e, o) =>
+                //        {
+                //            if (e.SequenceId % analyzeEveryXFrames == 0)
+                //            {
+                //                o.Post(x, e.OriginatingTime);
+                //                Console.WriteLine("sec id: " + e.SequenceId);
+                //                Console.WriteLine("orig time: " + e.OriginatingTime);
+                //                Console.WriteLine("created time: " + e.Time);
+                //                Console.WriteLine("   -----------   ----------   ----------   ");
+
+                //                if (e.SequenceId > 1800)
+                //                {
+                //                    Console.WriteLine("debuging");
+                //                }
+
+                //            }
+                //        }).PipeTo(objectDetector.In);
+
+                //    objectDetector.Out.Write("computerVision response: " + Path.GetFileName(videoPath), store);
+                //});
+
+
                 foreach (string videoPath in videoPaths)
                 {
+                    Console.WriteLine("analyzing: " + videoPath);
                     MediaSource ms = new MediaSource(p, videoPath);
                     ms.Image.Write("image: " + Path.GetFileName(videoPath), store);
 
                     ImageAnalyzer objectDetector = new ImageAnalyzer(p, objectDetectionConfig);
 
-                    ms.Image.Delay(TimeSpan.FromMilliseconds(200)).Process<Shared<Image>, Shared<Image>>(
+                    ms.Image.Delay(TimeSpan.FromMilliseconds(50)).Process<Shared<Image>, Shared<Image>>(
                         (x, e, o) =>
                         {
                             if (e.SequenceId % analyzeEveryXFrames == 0)
                             {
                                 o.Post(x, e.OriginatingTime);
+
+                                Console.WriteLine("   -----------   " + videoPath + "   ----------   ");
                                 Console.WriteLine("sec id: " + e.SequenceId);
                                 Console.WriteLine("orig time: " + e.OriginatingTime);
                                 Console.WriteLine("created time: " + e.Time);
-                                Console.WriteLine("   -----------   ----------   ----------   ");
 
-                                if (e.SequenceId > 1800)
-                                {
-                                    Console.WriteLine("debuging");
-                                }
+                                //if (e.SequenceId > 1800)
+                                //{
+                                //    Console.WriteLine("debuging");
+                                //}
 
                             }
                         }).PipeTo(objectDetector.In);
@@ -155,6 +189,10 @@ namespace ComputerVision
                 //            Console.WriteLine("orig time: " + e.OriginatingTime);
                 //            Console.WriteLine("created time: " + e.Time);
                 //            Console.WriteLine("   -----------   ----------   ----------   ");
+                //            if (e.SequenceId > 1800)
+                //            {
+                //                Console.WriteLine("debuging");
+                //            }
 
                 //        }
                 //    }).PipeTo(objectDetector.In);
@@ -240,17 +278,19 @@ namespace ComputerVision
                 //FrameInfoAsString analyseComp = new FrameInfoAsString(p, "Test001");
 
                 var computerVisionStream1 = videoStore1.OpenStream<ImageAnalysis>("computerVision response");
-                var computerVisionStream2 = videoStore2.OpenStream<ImageAnalysis>("computerVision response");
+                //var computerVisionStream2 = videoStore2.OpenStream<ImageAnalysis>("computerVision response");
                 //var computerVisionImageStream1 = videoStore1.OpenStream<Shared<Image>>("image");
                 //var computerVisionImageStream2 = videoStore2.OpenStream<ImageAnalysis>("image");
-                var compareData = computerVisionStream1.Out.Join(computerVisionStream2.Out);
+                //var compareData = computerVisionStream1.Out.Join(computerVisionStream2.Out);
 
                 CompareImageAnalysis compare = new CompareImageAnalysis(p);
 
-                computerVisionStream1.Out.Do((x,e) => Console.WriteLine("stream1 input"));
+                computerVisionStream1.Out.Do((x, e) => Console.WriteLine("stream1 input"));
+                //computerVisionStream2.Out.Do((x, e) => Console.WriteLine("stream2 input"));
 
-                computerVisionStream1.Out.PipeTo(compare.Analysis1);
-                computerVisionStream2.Out.PipeTo(compare.Analysis2);
+
+                //computerVisionStream1.Out.PipeTo(compare.Analysis1);
+                //computerVisionStream2.Out.PipeTo(compare.Analysis2);
 
                 //compareData.Out.Process<(ImageAnalysis, ImageAnalysis), Object>(
                 //    (x, e, o) =>
