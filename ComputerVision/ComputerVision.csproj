@@ -106,12 +106,15 @@
     <Compile Include="CognitiveServiceHandler.cs" />
     <Compile Include="CognitiveServices.cs" />
     <Compile Include="CompareImageAnalysis.cs" />
+    <Compile Include="FeatureComparison.cs" />
     <Compile Include="FrameComparison.cs" />
     <Compile Include="FrameInfoAsString.cs" />
     <Compile Include="FaceVisualizer.cs" />
     <Compile Include="ObjectVisualizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ObjectComparison.cs" />
+    <Compile Include="TagComparison.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

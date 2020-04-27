@@ -80,8 +80,11 @@ namespace CompareData
             cognitiveServiceHandler.RunCognitiveServices(cognitiveServices, videos, storeName: storeNameVid1);
             Console.WriteLine("computer vision done!");
 
-            //cognitiveServiceHandler = new CognitiveServiceHandler(apiKey, apiEndpoint, apiRegion, storeLocation);
-            //cognitiveServiceHandler.RunCognitiveServices(cognitiveServices, videos, storeName: storeNameVid2);
+            cognitiveServiceHandler = new CognitiveServiceHandler(apiKey, apiEndpoint, apiRegion, storeLocation);
+            var videosHelper = videos[0];
+            videos[0] = videos[1];
+            videos[1] = videosHelper;
+            cognitiveServiceHandler.RunCognitiveServices(cognitiveServices, videos, storeName: storeNameVid2);
 
             storeCouples.Add(Tuple.Create(storeNameVid1, storeNameVid2));
 
@@ -112,10 +115,10 @@ namespace CompareData
         {
             CognitiveServiceHandler cognitiveServiceHandler = new CognitiveServiceHandler(apiKey, apiEndpoint, apiRegion, storeLocation);
 
-            //cognitiveServiceHandler.CompareVideoAnalasis(storeCouples[0].Item1, storeCouples[1].Item2);
-            //cognitiveServiceHandler.CompareVideoAnalasis("storedObjectDetection", "storedObjectDetection");
-            cognitiveServiceHandler.CompareVideoAnalasis("objectDetectionsnippedSpeechTest.mp4", "objectDetectionsnippedVersion.mp4");
-            //cognitiveServiceHandler.CompareVideoAnalasis("objectDetection2020_0115_122025_003A.MOV", "objectDetection2020_0120_093453_003A.MOV");
+            //cognitiveServiceHandler.CompareVideoAnalasis(storeCouples[0].Item1, storeCouples[0].Item2);
+            //cognitiveServiceHandler.CompareVideoAnalasis("objectDetectionsnippedSpeechTest.mp4", "objectDetectionsnippedVersion.mp4");
+            //cognitiveServiceHandler.CompareVideoAnalasis("2vid object detection", new List<string>() { "2020_0110_100102_003A.MOV", "2020_0110_142146_003A.MOV" });
+            cognitiveServiceHandler.CompareVideoAnalasis("objectDetection2020_0110_100102_003A.MOV", "objectDetection2020_0110_142146_003A.MOV");
             //cognitiveServiceHandler.CompareVideoAnalasis("objectDetection2020_0115_122025_003A.MOV", "objectDetection2020_0120_093453_003A.MOV");
         }
     }

@@ -10,6 +10,7 @@ namespace ComputerVision
     {
         Face,
         ObjectDetection,
+        ObjectDetectionTwoVids,
         Speech
     }
 }

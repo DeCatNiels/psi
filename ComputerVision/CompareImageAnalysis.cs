@@ -15,7 +15,7 @@ namespace ComputerVision
         {
             // create imageAnalysis1 receiver
             this.Analysis1 = pipeline.CreateReceiver<ImageAnalysis>(this, ReceiveAnalysis1, nameof(this.Analysis1));
-            
+
             // create imageAnalysis1 receiver
             this.Analysis2 = pipeline.CreateReceiver<ImageAnalysis>(this, ReceiveAnalysis2, nameof(this.Analysis2));
 
@@ -24,34 +24,114 @@ namespace ComputerVision
         }
 
         private void ReceiveAnalysis2(ImageAnalysis imageAnalysis2, Envelope e)
+        {   
+            Console.WriteLine("   ----------   new frame incomming   ----------   ");
+
+            FeatureComparison<ImageTag> tagComp = getTagComp(imageAnalysis1.Tags, imageAnalysis2.Tags);
+
+            FeatureComparison<DetectedObject> objComp = getObjectComp(imageAnalysis1.Objects, imageAnalysis2.Objects);
+
+            //Console.WriteLine(" | | | | | |   tag comparison   | | | | | | ");
+            //Console.WriteLine(tagComp.toJsonString());
+            //Console.WriteLine();
+
+            //Console.WriteLine(" | | | | | |   object comparison   | | | | | | ");
+            //Console.WriteLine(objComp.toJsonString());
+            //Console.WriteLine();
+
+            var fc = new FrameComparison(tagComparison: tagComp, objectComparison: objComp, faceComparison: Tuple.Create(imageAnalysis1.Faces, imageAnalysis2.Faces));
+            Console.WriteLine(fc.toJsonString());
+
+            this.Out.Post(fc, e.OriginatingTime);
+        }
+
+        private FeatureComparison<ImageTag> getTagComp(IList<ImageTag> tagsFrame1, IList<ImageTag> tagsFrame2)
         {
-            Console.WriteLine("   ----------   ----------   ----------");
-            List<ImageTag> similarTags = new List<ImageTag>();
-            List<ImageTag> differentTagsImage1 = new List<ImageTag>();
-            List<ImageTag> differentTagsImage2 = new List<ImageTag>();
-            foreach (ImageTag tag in imageAnalysis1.Tags)
+            Dictionary<string, List<(ImageTag, ImageTag)>> similarTags = new Dictionary<string, List<(ImageTag, ImageTag)>>();
+            Dictionary<string, List<ImageTag>> differentTagsImage1 = new Dictionary<string, List<ImageTag>>();
+            Dictionary<string, List<ImageTag>> differentTagsImage2 = new Dictionary<string, List<ImageTag>>();
+            foreach (ImageTag tag in tagsFrame1)
             {
-                if (imageAnalysis2.Tags.Contains(tag))
+                bool found = false;
+                foreach (ImageTag tag2 in tagsFrame2)
                 {
-                    similarTags.Add(tag);
+                    if (tag.Name == tag2.Name)
+                    {
+                        similarTags.Add( tag.Name, new List<(ImageTag, ImageTag)>() { (tag, tag2) });
+                        found = true;
+                        break;
+                    }
                 }
-                else
+                if (!found)
                 {
-                    differentTagsImage1.Add(tag);
+                    differentTagsImage1.Add(tag.Name, new List<ImageTag>() { tag });
                 }
             }
-            foreach (ImageTag tag in imageAnalysis2.Tags)
+            foreach (ImageTag tag in tagsFrame2)
             {
-                if (!similarTags.Contains(tag))
+                if (!similarTags.ContainsKey(tag.Name))
                 {
-                    differentTagsImage2.Add(tag);
+                    differentTagsImage2.Add(tag.Name, new List<ImageTag>() { tag });
                 }
             }
 
-            FrameComparison frameComp = new FrameComparison(similarTags, differentTagsImage1, differentTagsImage2);
-            Console.WriteLine(frameComp.toJsonString());
+            return new FeatureComparison<ImageTag>(similarTags, differentTagsImage1, differentTagsImage2);
+        }
 
-            this.Out.Post(frameComp, e.OriginatingTime);
+        private FeatureComparison<DetectedObject> getObjectComp(IList<DetectedObject> objectsFrame1, IList<DetectedObject> objectsFrame2)
+        {
+            Dictionary<string, List<(DetectedObject, DetectedObject)>> similarObjects = new Dictionary<string, List<(DetectedObject, DetectedObject)>>();
+            Dictionary<string, List<DetectedObject>> differentObjectsImage1 = new Dictionary<string, List<DetectedObject>>();
+            Dictionary<string, List<DetectedObject>> differentObjectsImage2 = new Dictionary<string, List<DetectedObject>>();
+            List<DetectedObject> addedObj = new List<DetectedObject>();
+            foreach (DetectedObject obj in objectsFrame1)
+            {
+                bool found = false;
+                foreach (DetectedObject obj2 in objectsFrame2)
+                {
+                    if (!addedObj.Contains(obj2) && obj.ObjectProperty == obj2.ObjectProperty)
+                    {
+                        if (similarObjects.ContainsKey(obj.ObjectProperty))
+                        {
+                            similarObjects[obj.ObjectProperty].Add((obj, obj2));
+                        }
+                        else
+                        {
+                            similarObjects.Add(obj.ObjectProperty, new List<(DetectedObject, DetectedObject)>() { (obj, obj2) });
+                        }
+                        addedObj.Add(obj2);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    if (differentObjectsImage1.ContainsKey(obj.ObjectProperty))
+                    {
+                        differentObjectsImage1[obj.ObjectProperty].Add(obj);
+                    }
+                    else
+                    {
+                        differentObjectsImage1.Add(obj.ObjectProperty, new List<DetectedObject>() { obj });
+                    }
+                }
+            }
+            foreach (DetectedObject obj in objectsFrame2)
+            {
+                if (!addedObj.Contains(obj))
+                {
+                    if (differentObjectsImage2.ContainsKey(obj.ObjectProperty))
+                    {
+                        differentObjectsImage2[obj.ObjectProperty].Add(obj);
+                    }
+                    else
+                    {
+                        differentObjectsImage2.Add(obj.ObjectProperty, new List<DetectedObject>() { obj });
+                    }
+                }
+            }
+
+            return new FeatureComparison<DetectedObject>(similarObjects, differentObjectsImage1, differentObjectsImage2);
         }
 
         private void ReceiveAnalysis1(ImageAnalysis analysis1, Envelope e)

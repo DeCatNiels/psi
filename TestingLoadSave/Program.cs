@@ -60,7 +60,7 @@ namespace TestingLoadSave
                         var sin2 = store2.OpenStream<double>("Sin2");
                         sin2.Do((x, e) => Console.WriteLine("sin2 - value: " + x + "    time: " + e.OriginatingTime));
 
-                        var joinedSins = sin1.Out.Join(sin2.Out);
+                        var joinedSins = sin1.Join(sin2, Reproducible.Nearest<double>(RelativeTimeInterval.Past()));
 
                         joinedSins.Out.Process<(double, double), double>(
                             (x, e, o) =>
